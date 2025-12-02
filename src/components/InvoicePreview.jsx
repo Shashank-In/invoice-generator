@@ -36,7 +36,7 @@ const InvoicePreview = ({ data }) => {
                 <div className="logo">
                     {/* Improved CredShields Logo */}
                     {/* CredShields Logo Image */}
-                    <img src="/logo.png" alt="CredShields Logo" style={{ width: '200px', height: 'auto' }} />
+                    <img src={`${import.meta.env.BASE_URL}logo.png`} alt="CredShields Logo" style={{ width: '200px', height: 'auto' }} />
                 </div>
             </header>
 
