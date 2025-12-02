@@ -35,7 +35,8 @@ function App() {
       }
     },
     settings: {
-      showGst: true
+      showGst: true,
+      currency: 'INR'
     }
   })
 
@@ -43,11 +44,15 @@ function App() {
     setData(prev => ({ ...prev, company: { ...prev.company, [field]: value } }))
   }
 
-  const toggleGst = () => {
+  const updateSettings = (field, value) => {
     setData(prev => ({
       ...prev,
-      settings: { ...prev.settings, showGst: !prev.settings.showGst }
+      settings: { ...prev.settings, [field]: value }
     }))
+  }
+
+  const toggleGst = () => {
+    updateSettings('showGst', !data.settings.showGst)
   }
 
   const updatePayment = (field, value, isCrypto = false) => {
@@ -96,6 +101,7 @@ function App() {
           addItem={addItem}
           removeItem={removeItem}
           toggleGst={toggleGst}
+          updateSettings={updateSettings}
         />
       </div>
       <div className="preview-panel">

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, removeItem, toggleGst }) => {
+const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, removeItem, toggleGst, updateSettings }) => {
     const handlePrint = () => {
         window.print()
     }
@@ -14,7 +14,7 @@ const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, 
                 </button>
             </div>
 
-            <div className="form-group" style={{ marginBottom: '20px', padding: '10px', background: '#f8f9fa', borderRadius: '4px' }}>
+            <div className="form-group" style={{ marginBottom: '20px', padding: '10px', background: '#f8f9fa', borderRadius: '4px', display: 'flex', gap: '20px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', fontWeight: 'bold' }}>
                     <input
                         type="checkbox"
@@ -24,6 +24,19 @@ const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, 
                     />
                     Show GST Column
                 </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <label style={{ fontWeight: 'bold' }}>Currency:</label>
+                    <select
+                        value={data.settings?.currency || 'INR'}
+                        onChange={(e) => updateSettings('currency', e.target.value)}
+                        style={{ padding: '5px' }}
+                    >
+                        <option value="INR">INR</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </div>
             </div>
 
             <div className="form-section">
@@ -55,7 +68,7 @@ const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, 
                 <div className="form-group">
                     <label>Date</label>
                     <input
-                        type="text"
+                        type="date"
                         value={data.company.date}
                         onChange={(e) => updateCompany('date', e.target.value)}
                     />

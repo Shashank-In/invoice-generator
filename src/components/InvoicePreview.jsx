@@ -2,29 +2,23 @@ import React from 'react'
 
 const InvoicePreview = ({ data }) => {
     const calculateTotal = () => {
-        // This is a simple calculation assuming the format "X,XX,XXX INR"
-        // In a real app, we'd parse this better. For now, we trust the input or just display what's there.
-        // However, to match the image, the total is explicitly in the data or calculated.
-        // The current state has a 'totals' object, but we can also sum up the items if needed.
-        // For this version, we'll just display the total from the state or sum the amounts if they were numbers.
-        // Since inputs are strings with " INR", we'll just use the last item's amount or a manual total field if we added one.
-        // Wait, the image shows a "Total" line. I didn't add a "Total" field in the form, 
-        // but I can calculate it if I parse the strings, or I can just add a total field.
-        // For simplicity and robustness given the string inputs, I'll assume the user enters the total or I'll try to parse.
-        // Let's just sum it up if possible, or better yet, add a Total field to the form? 
-        // The plan said "totals: { totalAmount: ... }". I should use that.
-        // But I didn't add it to the form. I should probably add it or calculate it.
-        // Let's calculate it if possible, otherwise show a placeholder.
-        // Actually, the image has "Total 2,95,000 INR".
-        // I'll stick to the plan's data structure but I missed adding the total editor in the form.
-        // I will add a simple calculation logic here or just display the last item's amount as total for now if there's only one item.
-        // Better: I'll just sum the 'amount' fields if they are numbers, otherwise just show "Calculated Total".
-        // Actually, I'll just add a "Total" field to the form in a future step if needed.
-        // For now, let's just display the sum of amounts.
+        const currency = data.settings?.currency || 'INR'
         return data.items.reduce((acc, item) => {
             const val = parseFloat(item.amount.replace(/[^0-9.]/g, '')) || 0
             return acc + val
-        }, 0).toLocaleString('en-IN') + ' INR'
+        }, 0).toLocaleString('en-IN') + ' ' + currency
+    }
+
+    const formatDate = (dateString) => {
+        if (!dateString) return ''
+        // Check if it's already in the desired format (e.g. "Nov 1, 2024")
+        if (dateString.includes(',')) return dateString
+
+        // Otherwise assume YYYY-MM-DD from date input
+        const date = new Date(dateString)
+        if (isNaN(date.getTime())) return dateString
+
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
     }
 
     return (
@@ -48,7 +42,7 @@ const InvoicePreview = ({ data }) => {
                     <p>Invoice #<br /><strong>{data.company.invoiceNo}</strong></p>
                 </div>
                 <div className="invoice-date">
-                    <p><strong>{data.company.date}</strong></p>
+                    <p><strong>{formatDate(data.company.date)}</strong></p>
                 </div>
             </div>
 
