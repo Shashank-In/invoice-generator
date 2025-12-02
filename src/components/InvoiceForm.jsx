@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, removeItem }) => {
+const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, removeItem, toggleGst }) => {
     const handlePrint = () => {
         window.print()
     }
@@ -12,6 +12,18 @@ const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, 
                 <button onClick={handlePrint} style={{ padding: '10px 20px', background: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}>
                     Print / Save PDF
                 </button>
+            </div>
+
+            <div className="form-group" style={{ marginBottom: '20px', padding: '10px', background: '#f8f9fa', borderRadius: '4px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', fontWeight: 'bold' }}>
+                    <input
+                        type="checkbox"
+                        checked={data.settings?.showGst ?? true}
+                        onChange={toggleGst}
+                        style={{ marginRight: '10px', width: 'auto' }}
+                    />
+                    Show GST Column
+                </label>
             </div>
 
             <div className="form-section">
@@ -70,14 +82,16 @@ const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, 
                                 onChange={(e) => updateItem(index, 'price', e.target.value)}
                             />
                         </div>
-                        <div className="form-group">
-                            <label>GST</label>
-                            <input
-                                type="text"
-                                value={item.gst}
-                                onChange={(e) => updateItem(index, 'gst', e.target.value)}
-                            />
-                        </div>
+                        {(data.settings?.showGst ?? true) && (
+                            <div className="form-group">
+                                <label>GST</label>
+                                <input
+                                    type="text"
+                                    value={item.gst}
+                                    onChange={(e) => updateItem(index, 'gst', e.target.value)}
+                                />
+                            </div>
+                        )}
                         <div className="form-group">
                             <label>Amount</label>
                             <input

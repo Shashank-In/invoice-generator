@@ -33,11 +33,21 @@ function App() {
         networkInfo: 'USDT or USDC over ETH, Base or Polygon -',
         walletAddress: '0xe661D1c2E8A37Fc94a270Cf6e024B469f5D70Cd9'
       }
+    },
+    settings: {
+      showGst: true
     }
   })
 
   const updateCompany = (field, value) => {
     setData(prev => ({ ...prev, company: { ...prev.company, [field]: value } }))
+  }
+
+  const toggleGst = () => {
+    setData(prev => ({
+      ...prev,
+      settings: { ...prev.settings, showGst: !prev.settings.showGst }
+    }))
   }
 
   const updatePayment = (field, value, isCrypto = false) => {
@@ -85,6 +95,7 @@ function App() {
           updateItem={updateItem}
           addItem={addItem}
           removeItem={removeItem}
+          toggleGst={toggleGst}
         />
       </div>
       <div className="preview-panel">

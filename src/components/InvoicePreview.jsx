@@ -61,7 +61,7 @@ const InvoicePreview = ({ data }) => {
                     <tr>
                         <th>Description</th>
                         <th>Price</th>
-                        <th>GST</th>
+                        {(data.settings?.showGst ?? true) && <th>GST</th>}
                         <th>Amount</th>
                     </tr>
                 </thead>
@@ -70,7 +70,7 @@ const InvoicePreview = ({ data }) => {
                         <tr key={index}>
                             <td>{item.description}</td>
                             <td>{item.price}</td>
-                            <td>{item.gst}</td>
+                            {(data.settings?.showGst ?? true) && <td>{item.gst}</td>}
                             <td>{item.amount}</td>
                         </tr>
                     ))}
