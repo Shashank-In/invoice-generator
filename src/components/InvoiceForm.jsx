@@ -35,6 +35,7 @@ const InvoiceForm = ({ data, updateCompany, updatePayment, updateItem, addItem, 
                         <option value="USD">USD</option>
                         <option value="EUR">EUR</option>
                         <option value="GBP">GBP</option>
+                        <option value="SGD">SGD</option>
                     </select>
                 </div>
             </div>
